@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CornerTools</title>
+<link rel="stylesheet" href="github-markdown.css">
+<style>
+  html {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .headerlink {
+    opacity: 0.0;
+  }
+  body h1:hover a.headerlink,
+  body h2:hover a.headerlink,
+  body h3:hover a.headerlink,
+  body h4:hover a.headerlink {
+    opacity: 1.0;
+  }
+</style>
+</head>
+<body>
+<h1 id="corner-tools">Corner Tools<a class="headerlink" href="#corner-tools" title="Permanent link">&para;</a></h1>
+<p>This extension is a set of tools to work on corners of an outline. It comprises a tool available in the glyph editing view that allows you to round/cut corners by dragging to define the radius, and a pop-up window (accessible via the Extensions menu, under Corner Tools) which provides a more global set of controls.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#">Glyph view rounding tool</a><ul>
+<li><a href="#">Actions</a></li>
+<li><a href="#">Modifier keys</a></li>
+</ul>
+</li>
+<li><a href="#">Corner Tools controller</a><ul>
+<li><a href="#">Build</a></li>
+<li><a href="#">Break</a></li>
+<li><a href="#">Pit</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="glyph-view-rounding-tool">Glyph view rounding tool<a class="headerlink" href="#glyph-view-rounding-tool" title="Permanent link">&para;</a></h2>
+<h3 id="actions">Actions<a class="headerlink" href="#actions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Double-click</strong>: apply rounding</li>
+<li><strong>Command+Double-click</strong>: reset all radiuses</li>
+</ul>
+<h3 id="modifier-keys">Modifier keys<a class="headerlink" href="#modifier-keys" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Shift</strong>: radius steps 5 by 5</li>
+<li><strong>Option</strong>: make a flat corner rather than round</li>
+<li><strong>Shift</strong>+<strong>Command</strong>: reset radius</li>
+</ul>
+<p><img alt="" src="images/cornerTools-RoundingTool.png" /></p>
+<h2 id="corner-tools-controller">Corner Tools controller<a class="headerlink" href="#corner-tools-controller" title="Permanent link">&para;</a></h2>
+<p>The controller works as a wysiwyg corner editor, working with point selection. There are three modes:</p>
+<h3 id="build">Build<a class="headerlink" href="#build" title="Permanent link">&para;</a></h3>
+<p>Needs a selection of one or several segments and will try to grow new corners where it can. Results may vary.</p>
+<p><img alt="" src="images/cornerTool-build.png" /></p>
+<h3 id="break">Break<a class="headerlink" href="#break" title="Permanent link">&para;</a></h3>
+<p>This mode allows similar operations to what the rounding tool but with finer control and the ability to apply the same value to several corners at once. The two parameters allow you to do a number of things:</p>
+<p><img alt="" src="images/cornerTool-break-round.png" />
+<img alt="" src="images/cornerTool-break-cut.png" />
+<img alt="" src="images/cornerTool-break-overlap.png" /></p>
+<h3 id="pit">Pit<a class="headerlink" href="#pit" title="Permanent link">&para;</a></h3>
+<p>This mode implements ‘ink-traps’ or ’light-wells’ or whatever name fits your ideology. Having no opinion on the matter, I decided to take on another term, pits. Something wicked this way comes.</p>
+<p><img alt="" src="images/cornerTool-pit.png" /></p>
+<p>(If you get unexpected results, it may be that your contour direction isn’t right. And beyond that, it may well be that you overstep the capabilities of this code: bear in mind that outline modification is a tricky business, so don’t expect miracles.)</p>
+</body>
+</html>

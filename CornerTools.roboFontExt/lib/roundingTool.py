@@ -5,12 +5,14 @@ from glyphObjects import IntelGlyph
 from mojo.events import BaseEventTool, EditingTool, installTool, addObserver, removeObserver
 from mojo.drawingTools import *
 from AppKit import NSColor, NSBezierPath, NSImage
-from robofab.misc.arrayTools import pointInRect
+from fontTools.misc.arrayTools import pointInRect
 from math import hypot, pi
 
 import os
-dirname = os.path.dirname(__file__)
-toolbarIcon = NSImage.alloc().initWithContentsOfFile_(os.path.join(dirname, "RoundingToolIcon.pdf"))
+
+baseDir = os.path.dirname(os.path.dirname(__file__))
+pdfIconPath = os.path.join(baseDir, 'resources', "RoundingToolIcon.pdf")
+toolbarIcon = NSImage.alloc().initWithContentsOfFile_(pdfIconPath)
 
 knobColor = NSColor.colorWithCalibratedRed_green_blue_alpha_(.3, .1, 0.7, 0.85)
 

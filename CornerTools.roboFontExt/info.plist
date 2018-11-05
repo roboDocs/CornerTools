@@ -8,17 +8,17 @@
 			<key>path</key>
 			<string>cornerToolController.py</string>
 			<key>preferredName</key>
-			<string>Corner Tools</string>
+			<string>CornerTools</string>
 			<key>shortKey</key>
 			<string></string>
 		</dict>
 	</array>
 	<key>developer</key>
-	<string>Loic Sander</string>
+	<string>Loïc Sander</string>
 	<key>developerURL</key>
 	<string>https://github.com/loicsander</string>
 	<key>html</key>
-	<false/>
+	<true/>
 	<key>launchAtStartUp</key>
 	<integer>1</integer>
 	<key>mainScript</key>
@@ -26,16 +26,12 @@
 	<key>name</key>
 	<string>CornerTools</string>
 	<key>requiresVersionMajor</key>
-	<string>1</string>
+	<string>3</string>
 	<key>requiresVersionMinor</key>
-	<string>4</string>
+	<string>2</string>
 	<key>timeStamp</key>
 	<real>1415566404.026155</real>
 	<key>version</key>
-	<string>0.4.1</string>
-     <key>repository</key>
-    <string>loicsander/Robofont-scripts</string>
-    <key>extensionPath</key>
-    <string>CornerTools/CornerTools.roboFontExt</string>
+	<string>0.5.0</string>
 </dict>
 </plist>
