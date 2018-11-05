@@ -1,9 +1,10 @@
-from importlib import reload
-import glyphObjects
-reload(glyphObjects)
+# from importlib import reload
+# import glyphObjects
+# reload(glyphObjects)
 
 from glyphObjects import IntelGlyph
-from vanillaParameterObjects import VanillaSingleValueParameter, ParameterSliderTextInput
+import parameters.vanillaParameterObjects
+from parameters.vanillaParameterObjects import VanillaSingleValueParameter, ParameterSliderTextInput
 from vanilla import FloatingWindow, GradientButton, EditText, TextBox, RadioGroup, Group, Box
 from mojo.events import addObserver, removeObserver
 from mojo.UI import UpdateCurrentGlyphView
