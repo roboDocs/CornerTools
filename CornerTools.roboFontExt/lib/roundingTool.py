@@ -254,7 +254,7 @@ class RoundingTool(BaseEventTool):
             pen = self._sourceGlyph.getPointPen()
             self._roundedGlyph.drawPoints(pen)
             self._sourceGlyph.performUndo()
-            self._sourceGlyph.changed()            
+            self._sourceGlyph.changed()
             self.updateRoundablePoints()
 
     def stripContours(self, glyph):

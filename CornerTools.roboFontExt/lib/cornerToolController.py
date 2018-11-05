@@ -1,10 +1,11 @@
-# from importlib import reload
-# import glyphObjects
-# reload(glyphObjects)
+import os
+import sys
+dynamicParametersLibFolder = os.path.join(os.path.join(os.getcwd(), 'dynamicParameters'), 'lib')
+if not dynamicParametersLibFolder in sys.path:
+    sys.path.insert(0, dynamicParametersLibFolder)
 
 from glyphObjects import IntelGlyph
-import parameters.vanillaParameterObjects
-from parameters.vanillaParameterObjects import VanillaSingleValueParameter, ParameterSliderTextInput
+from dynamicParameters.vanillaParameterObjects import VanillaSingleValueParameter, ParameterSliderTextInput
 from vanilla import FloatingWindow, GradientButton, EditText, TextBox, RadioGroup, Group, Box
 from mojo.events import addObserver, removeObserver
 from mojo.UI import UpdateCurrentGlyphView
