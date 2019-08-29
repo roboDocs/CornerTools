@@ -7,7 +7,7 @@ Custom CocoaPen that displays a glyph with OnCurve & OffCurve points
 
 from fontTools.pens.basePen import BasePen
 from fontTools.pens.cocoaPen import CocoaPen
-from ufoLib.pointPen import AbstractPointPen, PointToSegmentPen
+from fontTools.pens.pointPen import AbstractPointPen, PointToSegmentPen
 
 class CocoaGlyphPen(BasePen):
 
