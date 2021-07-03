@@ -1499,8 +1499,7 @@ class IntelContour(object):
                 cornerSegment = [a1, h1, h2, a2]
             elif velocity == 0:
                 cornerSegment = [a1, a2]
-            if len(self.points) <= startIndex:
-                self.points.pop(startIndex)
+            self.points.pop(startIndex)
             for newPoint in cornerSegment:
                 newPoint.round()
                 self.insert(startIndex, newPoint)
