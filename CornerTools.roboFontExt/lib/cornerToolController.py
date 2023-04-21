@@ -9,11 +9,27 @@ from dynamicParameters.vanillaParameterObjects import VanillaSingleValueParamete
 from vanilla import FloatingWindow, GradientButton, EditText, TextBox, RadioGroup, Group, Box
 from mojo.events import addObserver, removeObserver
 from mojo.UI import UpdateCurrentGlyphView
+from mojo.extensions import getExtensionDefault, setExtensionDefault
 from math import pi
 from AppKit import NSColor
 
 cornerOutlineSoftColor = NSColor.colorWithCalibratedRed_green_blue_alpha_(.8, .6, 0, .2)
 cornerOutlineStrongColor = NSColor.colorWithCalibratedRed_green_blue_alpha_(.8, .6, 0, 0.85)
+
+EXTENSION_KEY = 'com.robofont.cornerTools.settings'
+def getSettingFromDefaults(setting):
+    defaults = {
+        'mode': 0,
+        'radius': 20,
+        'roundness': 1.25,
+        'depth': 30,
+        'breadth': 30,
+        'bottom': 5
+        }
+    all_settings = getExtensionDefault(EXTENSION_KEY, fallback=defaults)
+    setting = all_settings[setting]
+
+    return setting
 
 class CornerController:
 
@@ -22,19 +38,21 @@ class CornerController:
         self.w = FloatingWindow((400, 170), 'Corner Tool')
         self.w.getNSWindow().setBackgroundColor_(NSColor.whiteColor())
         self.modes = ['Break', 'Build', 'Pit']
-        self.objectTypes = {'Build':'Segment', 'Break':'Corner point', 'Pit':'Corner point'}
+        self.objectTypes = {'Break':'Corner point', 'Build':'Segment', 'Pit':'Corner point'}
         self.parameters = {
-            'radius': VanillaSingleValueParameter('radius', 20, (-200, 200), numType='int'),
-            'roundness': VanillaSingleValueParameter('roundness', 1.25, (0, 4), numType='float'),
-            'depth': VanillaSingleValueParameter('depth', 30, (-100, 100), numType='int'),
-            'breadth': VanillaSingleValueParameter('breadth', 30, (0, 150), numType='int'),
-            'bottom': VanillaSingleValueParameter('bottom', 5, (0, 40), numType='int')
+            'radius': VanillaSingleValueParameter('radius', getSettingFromDefaults('radius'), (-200, 200), numType='int'),
+            'roundness': VanillaSingleValueParameter('roundness', getSettingFromDefaults('roundness'), (0, 4), numType='float'),
+            'depth': VanillaSingleValueParameter('depth', getSettingFromDefaults('depth'), (-100, 100), numType='int'),
+            'breadth': VanillaSingleValueParameter('breadth', getSettingFromDefaults('breadth'), (0, 150), numType='int'),
+            'bottom': VanillaSingleValueParameter('bottom', getSettingFromDefaults('bottom'), (0, 40), numType='int')
         }
-        self.currentMode = 'Break'
+        
+        mode_index = getSettingFromDefaults('mode')
+        self.currentMode = self.modes[mode_index]
         self.previewGlyph = None
 
         self.w.modes = RadioGroup((15, 15, 70, -15), self.modes, callback=self.changeMode)
-        self.w.modes.set(0)
+        
         for i, mode in enumerate(self.modes):
             setattr(self.w, mode, Group((120, 15, -15, -15)))
             modeGroup = getattr(self.w, mode)
@@ -42,6 +60,9 @@ class CornerController:
             modeGroup.infoBox = Box((0, 0, -50, 35))
             modeGroup.info = TextBox((10, 8, -50, 20), 'No selection')
             if i > 0: modeGroup.show(False)
+            
+        self.w.modes.set(mode_index)
+        self.setMode(mode_index)
 
         self.w.Break.radius = ParameterSliderTextInput(self.parameters['radius'], (0, 60, -25, 25), title='Radius', callback=self.makePreviewGlyph)
         self.w.Break.roundness = ParameterSliderTextInput(self.parameters['roundness'], (0, 95, -25, 25), title='Roundness', callback=self.makePreviewGlyph)
@@ -64,9 +85,18 @@ class CornerController:
         self.w.bind('close', self.windowClose)
         self.setControls()
         self.w.open()
+        
+    # The first mode-setting, upon opening the extension
+    def setMode(self, index): 
+        hideModeGroup = getattr(self.w, "Break")  # Hide the first mode sliders
+        hideModeGroup.show(False)
+        self.currentMode = self.modes[index]
+        modeGroup = getattr(self.w, self.currentMode)
+        modeGroup.show(True)
+        self.setControls()
 
     def changeMode(self, sender):
-        index = sender.get()
+        index = sender.get()        
         previousModeGroup = getattr(self.w, self.currentMode)
         previousModeGroup.show(False)
         self.currentMode = self.modes[index]
@@ -120,6 +150,7 @@ class CornerController:
                     return
         self.previewGlyph = self.makeCornerGlyph()
         UpdateCurrentGlyphView()
+        
 
     def makeCornerGlyph(self, sender=None):
         mode = self.currentMode
@@ -195,6 +226,15 @@ class CornerController:
         return lines, curves
 
     def windowClose(self, notification):
+        # Keep the settings you had when you close the window, for next time.
+        setExtensionDefault(EXTENSION_KEY, {
+            'mode':      self.modes.index(self.currentMode), 
+            'radius':    int(self.w.Break.radius.get()), 
+            'roundness': float(self.w.Break.roundness.get()),
+            'depth':     int(self.w.Pit.depth.get()), 
+            'breadth':   int(self.w.Pit.breadth.get()),
+            'bottom':    int(self.w.Pit.bottom.get())
+            })
         removeObserver(self, 'draw')
         removeObserver(self, 'drawInactive')
         removeObserver(self, 'drawPreview')
