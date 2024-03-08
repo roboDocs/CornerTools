@@ -1,0 +1,13 @@
+name: CornerTools
+developer: "Loïc Sander"
+developerURL: https://github.com/loicsander
+launchAtStartUp: true
+mainScript: roundingTool.py
+version: 0.5.2
+addToMenu:
+- path: cornerToolController.py
+  preferredName: CornerTools
+  shortKey: ''
+html: true
+requiresVersionMajor: '3'
+requiresVersionMinor: '2'
